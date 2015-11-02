@@ -1,0 +1,21 @@
+{
+    "name": "mabna/EloquentRepositoryPattern",
+    "description": "this package use for implement repository pattern",
+    "license": "mabna",
+    "authors": [
+        {
+            "name": "masoud rooohbakhsh",
+            "email": "roohbakhsh.masoud@gmail.com"
+        }
+    ],
+    "require": {
+        "illuminate/database": "*"
+    },
+
+    "autoload":
+    {
+        "psr-4": {
+            "Repository\\": "."
+        }
+    }
+}
