@@ -9,7 +9,8 @@
         }
     ],
     "require": {
-        "illuminate/database": "*"
+        "illuminate/database": "*",
+        "illuminate/events": "^5.1"
     },
 
     "autoload":

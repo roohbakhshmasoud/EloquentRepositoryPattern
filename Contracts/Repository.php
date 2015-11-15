@@ -9,6 +9,10 @@
 namespace Repository\Contracts;
 
 
+use geo\src\model\meta;
+use Illuminate\Database\Capsule\Manager;
+use Illuminate\Support\Facades\DB;
+
 abstract class Repository implements RepositoryInteface
 {
 
@@ -33,6 +37,7 @@ abstract class Repository implements RepositoryInteface
         return $this->model->create($data);
     }
 
+
     public function update(array $data,$id, $attribute="id")
     {
         return $this->model->where($attribute, '=', $id)->update($data);
@@ -43,13 +48,39 @@ abstract class Repository implements RepositoryInteface
         return $this->model->destroy($id);
     }
 
-    public function find($id, $columns = array('*'))
+    public function find($id, $child = null, $columns = array('*') )
     {
-        return $this->model->find($id, $columns);
+        $result = null;
+        if($child !== null)
+        {
+            $result = $this->model->find($id, $columns)->child()->get();
+        }
+        else
+            $result = $this->model->find($id, $columns);
+
+        return $result;
     }
 
-    public function findBy($attribute, $value, $columns = array('*'))
+    public function findBy($attribute, $value,$columns = array('*'))
     {
-        return $this->model->where($attribute, '=', $value)->first($columns);
+
+        return $result = $this->model->where($attribute, '=', $value)->get();
     }
+
+    public function findByQuery($query)
+    {
+        return $this->model->raw($query);
+    }
+
+    public function findIn($attributes, $values)
+    {
+        return $this->model->whereIn($attributes , $values)->get();
+    }
+
+    public function select($query)
+    {
+        return Manager::select($query);
+    }
+
+
 }
